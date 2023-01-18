@@ -1,7 +1,7 @@
 import { io, Socket } from "socket.io-client"
 import { GameElement, Username } from "./models"
 
-export const openChannel = async (username: Username): Promise<Socket> => {
+export const openChannel = (username: Username): Socket => {
   const socket = io("http://localhost:4000", {
     query: { username },
   })
