@@ -1,6 +1,10 @@
-export const Name: React.FC = () => {
+type Props = {
+   name: string
+}
+
+export const Name: React.FC<Props> = ({ name }) => {
    return (
-      <div>Player</div>
+      <div>Player: {name}</div>
    )
 }
 

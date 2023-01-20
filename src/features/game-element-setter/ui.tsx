@@ -4,7 +4,12 @@ import React from "react";
 import { GameElement, rpsApi } from "shared/api";
 import { elementValues } from "./config"
 
-export const GameElementSetter: React.FC = () => {
+
+type Props = {
+   isOpponentOnline: boolean
+}
+
+export const GameElementSetter: React.FC<Props> = ({ isOpponentOnline }) => {
    const socket = useChannel()
    if (!socket) return null
    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,7 +17,7 @@ export const GameElementSetter: React.FC = () => {
    }
    return (
       <form>
-         {elementValues.map(value => <Item onChange={onChange} value={value} key={value} />)}
+         {elementValues.map(value => <Item onChange={onChange} value={value} key={value} disabled={!isOpponentOnline} />)}
       </form>
    )
 }

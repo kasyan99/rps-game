@@ -1,7 +1,9 @@
 export type GameElement = "rock" | "paper" | "scissors"
-export type Username = string
+export interface IUser {
+  username: string
+}
 
 export type Result = {
-  username: Username
+  username: string
   choice: GameElement
 }

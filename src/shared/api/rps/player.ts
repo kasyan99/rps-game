@@ -1,7 +1,7 @@
 import { io, Socket } from "socket.io-client"
-import { GameElement, Username } from "./models"
+import { GameElement, IUser } from "./models"
 
-export const openChannel = (username: Username): Socket => {
+export const openChannel = (username: string): Socket => {
   const socket = io("http://localhost:4000", {
     query: { username },
   })
@@ -17,20 +17,32 @@ export const getPlayers = (socket: Socket) => {
   socket.emit("get_players")
 }
 
-export const subscribePlayersReceived = (socket: Socket) => {
-  socket.on("players_received", (players: Username[]) => {
-    console.log("players: ", players)
-  })
+export const subscribePlayersReceived = (
+  socket: Socket,
+  handler: (players: string[]) => void
+) => {
+  // socket.on("players_received", (players: Username[]) => {
+  //   console.log("players: ", players)
+  // })
+  socket.on("players_received", handler)
 }
 
-export const subscribePlayersConnected = (socket: Socket) => {
-  socket.on("connected", (username: Username) => {
-    console.log("connected: ", username)
-  })
+export const subscribePlayersConnected = (
+  socket: Socket,
+  handler: (player: IUser) => void
+) => {
+  //   socket.on("connected", (username: Username) => {
+  //     console.log("connected: ", username)
+  //   })
+  socket.on("connected", handler)
 }
 
-export const subscribePlayersDisconnected = (socket: Socket) => {
-  socket.on("disconnected", (username: Username) => {
-    console.log("disconnected: ", username)
-  })
+export const subscribePlayersDisconnected = (
+  socket: Socket,
+  handler: (player: IUser) => void
+) => {
+  // socket.on("disconnected", (username: Username) => {
+  //   console.log("disconnected: ", username)
+  // })
+  socket.on("disconnected", handler)
 }

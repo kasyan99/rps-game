@@ -20,8 +20,6 @@ const Auth: React.FC = () => {
       if (!openedSocket && storagedPlayer) {
          const socket = rpsApi.player.openChannel(storagedPlayer)
 
-         rpsApi.subscribeToAllChannelEvents(socket)
-
          //store opened channel
          dispatch(setChannel(socket))
 

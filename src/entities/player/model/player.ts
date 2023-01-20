@@ -1,10 +1,9 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { useSelector } from "react-redux"
-import { Username } from "shared/api"
 import { Socket } from "socket.io-client"
 
 type InitialState = {
-  username: Username | null
+  username: string | null
   channel: Socket | null
 }
 
@@ -19,7 +18,7 @@ export const playerModel = createSlice({
   reducers: {
     setUsername: (
       state,
-      { payload: username }: PayloadAction<Username | null>
+      { payload: username }: PayloadAction<string | null>
     ) => {
       state.username = username
     },
