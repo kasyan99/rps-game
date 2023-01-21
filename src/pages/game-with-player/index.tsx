@@ -1,11 +1,12 @@
-import GameResults from "entities/game-results/ui"
-import Opponent from "entities/opponent/ui"
+
 import { Player } from "entities/player"
 import { useChannel, useUsername } from "entities/player/model"
 import { GameElementSetter } from "features/game-element-setter"
 import { SetScore } from "features/set-score"
+import ShowGameResults from "features/show-game-results/ui"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { Opponent } from "widgets/opponent"
 
 const GameWithPlayer: React.FC = () => {
 
@@ -31,7 +32,7 @@ const GameWithPlayer: React.FC = () => {
          <Opponent />
          <Player />
          <GameElementSetter />
-         <GameResults />
+         <ShowGameResults />
       </div>
    )
 }

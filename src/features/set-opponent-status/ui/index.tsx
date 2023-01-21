@@ -1,20 +1,18 @@
+import Status from "entities/opponent/ui/status"
 import { useChannel, useUsername } from "entities/player/model"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { rpsApi } from "shared/api"
-import { setOpponentName, useOpponentName } from "../model"
-import Status from "./status"
 
-const Opponent: React.FC = () => {
+
+export const SetOpponentStatus: React.FC = () => {
 
    const [isOnline, setIsOnline] = useState(false)
    const [isMadeChoice, setIsMadeChoice] = useState(false)
-   // const [opponentName, setOpponentName] = useState<string | undefined>()
 
    //get from store
    const socket = useChannel()
    const username = useUsername()
-   const opponentName = useOpponentName()
 
    const dispatch = useDispatch()
 
@@ -25,8 +23,6 @@ const Opponent: React.FC = () => {
          rpsApi.player.subscribePlayersReceived(socket, (players: string[]) => {
             if (players.length > 1) {
                setIsOnline(true)
-               const opponent = players.find(player => player !== username)
-               dispatch(setOpponentName(opponent))
             }
          })
 
@@ -49,17 +45,8 @@ const Opponent: React.FC = () => {
             setIsMadeChoice(true)
          })
       }
-   }, [socket, username])
+   }, [dispatch, socket, username])
 
-   return (
-      <div>Opponent: {opponentName}
-         {
-            opponentName ?
-               <Status isMadeChoice={isMadeChoice} isOnline={isOnline} />
-               : ' -'
-         }
-      </div>
-   )
+   return <Status isMadeChoice={isMadeChoice} isOnline={isOnline} />
+
 }
-
-export default Opponent

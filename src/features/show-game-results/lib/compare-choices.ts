@@ -1,5 +1,5 @@
 import { Result } from "shared/api"
-import { Winner } from "../types"
+import { Winner } from "../../../entities/game-results/types"
 
 export function compareChoices(results: Result[]) {
   let winner: Winner = null

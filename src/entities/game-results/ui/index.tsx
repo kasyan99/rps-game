@@ -1,38 +1,14 @@
-import { useChannel } from "entities/player/model"
-import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { Result, rpsApi } from "shared/api"
-import { compareChoices } from "../lib/compare-choices"
-import { setWinner, useWinner } from "../model/results"
+import { Result } from "shared/api"
+import { Winner } from "../types"
 
-const GameResults: React.FC = () => {
+type Props = {
+   player1: Result
+   player2: Result
+   winner: Winner
+}
 
-   const socket = useChannel()
-
-   // const [winner, setWinner] = useState<Winner>(null)
-   const [results, setResults] = useState<Result[] | null>(null)
-
-   const dispatch = useDispatch()
-
-   //get from store
-   const winner = useWinner()
-
-   useEffect(() => {
-      if (socket) {
-         rpsApi.game.subscribeGameFinished(socket, (response) => {
-            console.log('game f');
-
-            const win = compareChoices(response.results)
-            setResults(response.results)
-            dispatch(setWinner(win))
-         })
-      }
-   }, [dispatch, results, socket])
-
-   if (!winner || !results) return null
-
-   const [player1, player2] = results
-
+export const GameResults: React.FC<Props> = ({ player1, player2, winner }) => {
+   if (!winner) return null
 
    return (
       <div>Results:
@@ -50,5 +26,3 @@ const GameResults: React.FC = () => {
       </div>
    )
 }
-
-export default GameResults
