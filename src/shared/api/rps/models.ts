@@ -1,4 +1,5 @@
 export type GameElement = "rock" | "paper" | "scissors"
+
 export interface IUser {
   username: string
 }

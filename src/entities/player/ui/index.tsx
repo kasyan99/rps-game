@@ -1,8 +1,7 @@
-type Props = {
-   name: string
-}
+import { useUsername } from "../model"
 
-export const Name: React.FC<Props> = ({ name }) => {
+export const Player: React.FC = () => {
+   const name = useUsername()
    return (
       <div>Player: {name}</div>
    )

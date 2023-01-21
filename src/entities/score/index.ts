@@ -1,1 +1,2 @@
-export * as Score from "./ui"
+export * from "./ui"
+export * as scoreModel from "./model"

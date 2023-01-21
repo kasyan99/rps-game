@@ -1,2 +1,2 @@
-export * as Player from "./ui"
+export * from "./ui"
 export * as playerModel from "./model"

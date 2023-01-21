@@ -4,22 +4,31 @@ import { Winner } from "../types"
 export function compareChoices(results: Result[]) {
   let winner: Winner = null
 
-  console.log("-results", results)
-
   if (results.length === 0) return null
+
   const [player1, player2] = results
 
+  //array of choices for compare to find winner
   const choices = [player1.choice, player2.choice]
 
   let winnerIndex: number = -1
 
   if (player1.choice === player2.choice) {
     winnerIndex = -1
-  } else if (choices.includes("paper") && choices.includes("rock")) {
+  }
+  //paper beats rock
+  else if (choices.includes("paper") && choices.includes("rock")) {
+    //find index of winner (who chose paper)
     winnerIndex = choices.findIndex((choice) => choice === "paper")
-  } else if (choices.includes("scissors") && choices.includes("rock")) {
+  }
+  //rock beats scissors
+  else if (choices.includes("scissors") && choices.includes("rock")) {
+    //find index of winner (who chose rock)
     winnerIndex = choices.findIndex((choice) => choice === "rock")
-  } else if (choices.includes("scissors") && choices.includes("paper")) {
+  }
+  //scissors beats paper
+  else if (choices.includes("scissors") && choices.includes("paper")) {
+    //find index of winner (who chose scissors)
     winnerIndex = choices.findIndex((choice) => choice === "scissors")
   }
 
