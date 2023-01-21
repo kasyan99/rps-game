@@ -4,7 +4,7 @@ import React from "react";
 import { GameElement, rpsApi } from "shared/api";
 import { elementValues } from "./config"
 
-export const GameElementSetter: React.FC = () => {
+export const SetGameElement: React.FC = () => {
 
    const socket = useChannel()
 

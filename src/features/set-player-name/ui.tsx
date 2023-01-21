@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { USER_NAME } from "./config"
 
-export const PlayerNameSetter: React.FC = () => {
+export const SetPlayerName: React.FC = () => {
    const dispatch = useDispatch()
    const [player, setPlayer] = useState('')
 

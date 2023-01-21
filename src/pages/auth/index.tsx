@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { rpsApi } from "shared/api"
-import { PlayerNameSetter } from "features/player-name-setter"
+import { SetPlayerName } from "features/set-player-name"
 
 const Auth: React.FC = () => {
    const dispatch = useDispatch()
@@ -30,7 +30,7 @@ const Auth: React.FC = () => {
 
    return (
       <div>
-         <PlayerNameSetter />
+         <SetPlayerName />
       </div>
    )
 }

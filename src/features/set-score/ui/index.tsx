@@ -1,10 +1,11 @@
 import { useWinner } from "entities/game-results/model/results"
 import { useOpponentName } from "entities/opponent"
-import { useUsername } from "entities/player/model"
+import { useChannel, useUsername } from "entities/player/model"
 import { Score } from "entities/score"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { increaseOpponentScore, increaseUserScore, useOpponentScore, useUserScore } from "entities/score/model"
+import { increaseOpponentScore, increaseUserScore, resetScore, useOpponentScore, useUserScore } from "entities/score/model"
+import { rpsApi } from "shared/api"
 
 export const SetScore: React.FC = () => {
 
@@ -17,6 +18,8 @@ export const SetScore: React.FC = () => {
    const winner = useWinner()
 
    const dispatch = useDispatch()
+
+   const socket = useChannel()
 
    useEffect(() => {
       //no winner or draw -> do nothing
@@ -32,6 +35,14 @@ export const SetScore: React.FC = () => {
          dispatch(increaseOpponentScore())
       }
    }, [dispatch, opponentName, username, winner])
+
+   useEffect(() => {
+      if (socket) {
+         rpsApi.player.subscribePlayersDisconnected(socket, () => {
+            dispatch(resetScore())
+         })
+      }
+   }, [dispatch, socket])
 
    if (!opponentName || !username) return null
 

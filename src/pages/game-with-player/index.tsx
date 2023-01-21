@@ -1,7 +1,7 @@
 
 import { Player } from "entities/player"
 import { useChannel, useUsername } from "entities/player/model"
-import { GameElementSetter } from "features/game-element-setter"
+import { SetGameElement } from "features/set-game-element"
 import { SetScore } from "features/set-score"
 import ShowGameResults from "features/show-game-results/ui"
 import { useEffect } from "react"
@@ -31,7 +31,7 @@ const GameWithPlayer: React.FC = () => {
          <SetScore />
          <Opponent />
          <Player />
-         <GameElementSetter />
+         <SetGameElement />
          <ShowGameResults />
       </div>
    )
