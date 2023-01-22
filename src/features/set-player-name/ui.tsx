@@ -11,9 +11,11 @@ export const SetPlayerName: React.FC = () => {
    const navigate = useNavigate()
 
    useEffect(() => {
+      //get user from localStorage
       const storagedPlayer = localStorage.getItem(USER_NAME)
 
       if (storagedPlayer) {
+         //store user name
          dispatch(setUsername(storagedPlayer))
       }
    }, [dispatch, navigate])

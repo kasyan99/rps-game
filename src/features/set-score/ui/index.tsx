@@ -9,6 +9,7 @@ import { rpsApi } from "shared/api"
 
 export const SetScore: React.FC = () => {
 
+   //get from store
    const username = useUsername()
    const opponentName = useOpponentName()
 
@@ -39,6 +40,7 @@ export const SetScore: React.FC = () => {
    useEffect(() => {
       if (socket) {
          rpsApi.player.subscribePlayersDisconnected(socket, () => {
+            //reset score
             dispatch(resetScore())
          })
       }

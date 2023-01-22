@@ -22,6 +22,7 @@ export const playerModel = createSlice({
     ) => {
       state.username = username
     },
+    //set opened socket
     setChannel: (state, { payload: channel }: PayloadAction<Socket | null>) => {
       state.channel = channel
     },

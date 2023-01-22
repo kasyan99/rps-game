@@ -18,6 +18,7 @@ export const SetOpponentName: React.FC = () => {
 
          rpsApi.player.subscribePlayersReceived(socket, (players: string[]) => {
             if (players.length > 1) {
+               //find opponent name
                const opponent = players.find(player => player !== username)
                dispatch(setOpponentName(opponent))
             }

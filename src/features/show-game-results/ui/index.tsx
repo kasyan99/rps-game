@@ -18,19 +18,23 @@ const ShowGameResults: React.FC = () => {
    //get from store
    const winner = useWinner()
    const isShown = useIsShown()
+
    useEffect(() => {
       if (socket) {
          rpsApi.game.subscribeGameFinished(socket, (response) => {
-            console.log('game f');
-
+            //calculate winner
             const win = compareChoices(response.results)
+
             setResults(response.results)
+
             dispatch(setWinner(win))
 
+            //show results
             dispatch(setIsShown(true))
          })
 
          rpsApi.game.subscribeOponentChoice(socket, () => {
+            //hide results
             dispatch(setIsShown(false))
          })
       }

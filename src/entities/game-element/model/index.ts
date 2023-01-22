@@ -6,10 +6,12 @@ import { IGameElement } from "../types"
 
 type InitialState = {
   gameElements: IGameElement[]
+  disabled: boolean
 }
 
 const initialState: InitialState = {
   gameElements: initialGameElements,
+  disabled: true,
 }
 
 export const gameElementModel = createSlice({
@@ -37,10 +39,13 @@ export const gameElementModel = createSlice({
         return newElem
       })
     },
+    setDisabled: (state, { payload: disabled }: PayloadAction<boolean>) => {
+      state.disabled = disabled
+    },
   },
 })
 
-export const { resetElementsValue, setChosenElenment } =
+export const { resetElementsValue, setChosenElenment, setDisabled } =
   gameElementModel.actions
 
 // selectors
@@ -49,6 +54,14 @@ export const useGameElements = () =>
     createSelector(
       (state: RootState) => state.gameElement,
       (gameElement) => gameElement.gameElements
+    )
+  )
+
+export const useDisabled = () =>
+  useSelector(
+    createSelector(
+      (state: RootState) => state.gameElement,
+      (gameElement) => gameElement.disabled
     )
   )
 

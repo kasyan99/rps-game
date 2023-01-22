@@ -22,6 +22,7 @@ export const SetOpponentStatus: React.FC = () => {
 
          rpsApi.player.subscribePlayersReceived(socket, (players: string[]) => {
             if (players.length > 1) {
+               //set status online/offline
                setIsOnline(true)
             }
          })
@@ -29,24 +30,24 @@ export const SetOpponentStatus: React.FC = () => {
          rpsApi.player.getPlayers(socket)
 
          rpsApi.player.subscribePlayersConnected(socket, ({ username }) => {
-            console.log('conected', username);
+            //set status online/offline
             setIsOnline(true)
          })
 
          rpsApi.player.subscribePlayersDisconnected(socket, ({ username }) => {
-            console.log('disconected', username)
             //to check value of players
             rpsApi.player.getPlayers(socket)
+            //set status online/offline
             setIsOnline(false)
          })
 
          rpsApi.game.subscribeOponentChoice(socket, ({ username }) => {
-            console.log(username, 'made a choice');
+            //set status 'made a choice'
             setIsMadeChoice(true)
          })
 
-
          rpsApi.game.subscribeGameFinished(socket, () => {
+            //reset status 'made a choice'
             setIsMadeChoice(false)
          })
       }

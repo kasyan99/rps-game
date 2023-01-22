@@ -1,4 +1,4 @@
-import { resetElementsValue, setChosenElenment, useGameElements } from "entities/game-element";
+import { resetElementsValue, setChosenElenment, setDisabled, useDisabled, useGameElements } from "entities/game-element";
 import { Item } from "entities/game-element"
 import { setIsShown } from "entities/game-results/model/results";
 import { useChannel } from "entities/player/model";
@@ -14,11 +14,21 @@ export const SetGameElement: React.FC = () => {
 
    const gameElements = useGameElements()
 
+   const disabled = useDisabled()
+
    useEffect(() => {
       if (socket) {
          rpsApi.game.subscribeGameFinished(socket, () => {
             //reset elements(inputs) values
             dispatch(resetElementsValue())
+         })
+
+         rpsApi.player.subscribePlayersReceived(socket, (players: string[]) => {
+            if (players.length < 2) {
+               dispatch(setDisabled(true))
+            } else {
+               dispatch(setDisabled(false))
+            }
          })
       }
    }, [dispatch, socket])
@@ -39,7 +49,7 @@ export const SetGameElement: React.FC = () => {
 
    return (
       <form>
-         {gameElements.map(element => <Item onChange={onChange} value={element.value} key={element.value} disabled={false} checked={element.checked} />)}
+         {gameElements.map(element => <Item onChange={onChange} value={element.value} key={element.value} disabled={disabled} checked={element.checked} />)}
       </form>
    )
 }
