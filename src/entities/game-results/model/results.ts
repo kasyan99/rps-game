@@ -6,11 +6,13 @@ import { Winner } from "../types"
 type InitialState = {
   results: Result[] | null
   winner: Winner
+  isShown: boolean
 }
 
 const initialState: InitialState = {
   results: null,
   winner: null,
+  isShown: false,
 }
 
 export const resultsModel = createSlice({
@@ -26,10 +28,13 @@ export const resultsModel = createSlice({
     setWinner: (state, { payload: winner }: PayloadAction<Winner>) => {
       state.winner = winner
     },
+    setIsShown: (state, { payload: isShown }: PayloadAction<boolean>) => {
+      state.isShown = isShown
+    },
   },
 })
 
-export const { setResults, setWinner } = resultsModel.actions
+export const { setResults, setWinner, setIsShown } = resultsModel.actions
 
 // selectors
 export const useResults = () =>
@@ -45,6 +50,14 @@ export const useWinner = () =>
     createSelector(
       (state: RootState) => state.results,
       (results) => results.winner
+    )
+  )
+
+export const useIsShown = () =>
+  useSelector(
+    createSelector(
+      (state: RootState) => state.results,
+      (results) => results.isShown
     )
   )
 

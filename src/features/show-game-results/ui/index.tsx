@@ -1,5 +1,5 @@
 import { GameResults } from "entities/game-results"
-import { setWinner, useWinner } from "entities/game-results/model/results"
+import { setIsShown, setWinner, useIsShown, useWinner } from "entities/game-results/model/results"
 import { useChannel } from "entities/player/model"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
@@ -17,7 +17,7 @@ const ShowGameResults: React.FC = () => {
 
    //get from store
    const winner = useWinner()
-
+   const isShown = useIsShown()
    useEffect(() => {
       if (socket) {
          rpsApi.game.subscribeGameFinished(socket, (response) => {
@@ -26,6 +26,12 @@ const ShowGameResults: React.FC = () => {
             const win = compareChoices(response.results)
             setResults(response.results)
             dispatch(setWinner(win))
+
+            dispatch(setIsShown(true))
+         })
+
+         rpsApi.game.subscribeOponentChoice(socket, () => {
+            dispatch(setIsShown(false))
          })
       }
    }, [dispatch, results, socket])
@@ -38,7 +44,14 @@ const ShowGameResults: React.FC = () => {
    if (!winner) return null
 
    return (
-      <GameResults player1={player1} player2={player2} winner={winner} />
+      <>
+         {
+            isShown
+               ? <GameResults player1={player1} player2={player2} winner={winner} />
+               : ''
+         }
+      </>
+
    )
 }
 

@@ -44,6 +44,11 @@ export const SetOpponentStatus: React.FC = () => {
             console.log(username, 'made a choice');
             setIsMadeChoice(true)
          })
+
+
+         rpsApi.game.subscribeGameFinished(socket, () => {
+            setIsMadeChoice(false)
+         })
       }
    }, [dispatch, socket, username])
 

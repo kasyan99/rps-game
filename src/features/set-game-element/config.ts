@@ -1,3 +1,16 @@
-import { GameElement } from "shared/api"
+import { IGameElement } from "./types"
 
-export const elementValues: GameElement[] = ["paper", "rock", "scissors"]
+export const initialGameElements: IGameElement[] = [
+  {
+    value: "paper",
+    checked: false,
+  },
+  {
+    value: "rock",
+    checked: false,
+  },
+  {
+    value: "scissors",
+    checked: false,
+  },
+]
