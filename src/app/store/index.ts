@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
+import { gameElementModel } from "entities/game-element"
 
 import { resultsModel } from "entities/game-results"
 import { opponentModel } from "entities/opponent"
@@ -11,6 +12,7 @@ export const store = configureStore({
     opponent: opponentModel.reducer,
     score: scoreModel.reducer,
     results: resultsModel.reducer,
+    gameElement: gameElementModel.reducer,
   },
   //to store socket
   middleware: (getDefaultMiddleware) =>

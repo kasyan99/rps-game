@@ -1,4 +1,4 @@
-import { IGameElement } from "./types"
+import { IGameElement } from "../types"
 
 export const initialGameElements: IGameElement[] = [
   {
