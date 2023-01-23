@@ -28,7 +28,5 @@ export const SetOpponentName: React.FC = () => {
       }
    }, [dispatch, socket, username])
 
-   if (!opponentName) return null
-
    return <OpponentName opponentName={opponentName} />
 }

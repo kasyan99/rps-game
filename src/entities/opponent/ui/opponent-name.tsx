@@ -1,5 +1,5 @@
 type Props = {
-   opponentName: string
+   opponentName: string | undefined
 }
 
 export const OpponentName: React.FC<Props> = ({ opponentName }) => {

@@ -33,7 +33,7 @@ export const SetGameElement: React.FC = () => {
       }
    }, [dispatch, socket])
 
-   if (!socket) return null
+   if (!socket) return <div>Loading...</div>
 
    //make a choice
    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
