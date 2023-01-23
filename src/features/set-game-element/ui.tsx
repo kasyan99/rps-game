@@ -49,7 +49,14 @@ export const SetGameElement: React.FC = () => {
 
    return (
       <form>
-         {gameElements.map(element => <Item onChange={onChange} value={element.value} key={element.value} disabled={disabled} checked={element.checked} />)}
+         {gameElements.map(element => <Item
+            onChange={onChange}
+            value={element.value}
+            key={element.value}
+            disabled={disabled}
+            checked={element.checked}
+            img={element.img}
+         />)}
       </form>
    )
 }

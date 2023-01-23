@@ -1,0 +1,27 @@
+.root {
+   input {
+      display: none;
+      }
+      
+   label{
+      border: 1px solid black;
+      width: 77px;
+      height: 77px;
+      display: inline-block;
+      font-size: 0px;
+      padding: 10px;
+      overflow: hidden;
+      background-color: #fff;
+      cursor: pointer;
+   }
+      
+   input:checked + label{
+      outline: 4px solid black;
+      outline-offset: -4px;
+   }
+
+   input:disabled + label {
+      opacity: 0.5;
+      cursor: default;
+   }
+}

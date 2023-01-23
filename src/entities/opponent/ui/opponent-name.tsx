@@ -4,6 +4,6 @@ type Props = {
 
 export const OpponentName: React.FC<Props> = ({ opponentName }) => {
    return (
-      <div>Opponent: {opponentName}</div>
+      <span>Opponent: {opponentName}</span>
    )
 }

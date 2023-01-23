@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { USER_NAME } from "./config"
+import classes from "./styles.module.scss"
 
 export const SetPlayerName: React.FC = () => {
    const dispatch = useDispatch()
@@ -33,7 +34,7 @@ export const SetPlayerName: React.FC = () => {
    }
 
    return (
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className={classes.form}>
          <input
             value={player}
             onChange={onChangeName}
