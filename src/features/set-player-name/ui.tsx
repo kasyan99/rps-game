@@ -2,23 +2,18 @@ import { setUsername } from "entities/player"
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { USER_NAME } from "./config"
 import classes from "./styles.module.scss"
 
 export const SetPlayerName: React.FC = () => {
-   const dispatch = useDispatch()
+   const dispatch: AppDispatch = useDispatch()
+
    const [player, setPlayer] = useState('')
 
    const navigate = useNavigate()
 
    useEffect(() => {
-      //get user from localStorage
-      const storagedPlayer = localStorage.getItem(USER_NAME)
-
-      if (storagedPlayer) {
-         //store user name
-         dispatch(setUsername(storagedPlayer))
-      }
+      //set user name if it exist
+      dispatch(setUsername())
    }, [dispatch, navigate])
 
 
@@ -29,7 +24,6 @@ export const SetPlayerName: React.FC = () => {
       e.preventDefault()
 
       //store user name 
-      localStorage.setItem(USER_NAME, player)
       dispatch(setUsername(player))
    }
 
