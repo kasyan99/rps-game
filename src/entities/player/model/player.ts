@@ -6,7 +6,8 @@ import {
 } from "@reduxjs/toolkit"
 import { useSelector } from "react-redux"
 import { Socket } from "socket.io-client"
-import { STORE_NAME, USER_NAME } from "../config"
+import { STORE_NAME } from "../config"
+import { getName, storeName } from "../lib"
 import { Username } from "../types"
 
 type InitialState = {
@@ -25,13 +26,13 @@ export const setUsername = createAsyncThunk(
     //user entered name
     if (username) {
       //store username
-      localStorage.setItem(USER_NAME, username)
+      storeName(username)
       return username
     }
-    //check if username is in localstorage
+    //check if username is in storage
     else {
       //get stored name
-      const storagedName: Username = localStorage.getItem(USER_NAME)
+      const storagedName: Username = getName()
       return storagedName
     }
   }
