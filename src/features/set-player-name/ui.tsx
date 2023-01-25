@@ -1,4 +1,4 @@
-import { setUsername } from "entities/player/model"
+import { setUsername } from "entities/player"
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"

@@ -1,5 +1,5 @@
 import { OpponentName, setOpponentName, useOpponentName } from "entities/opponent"
-import { useChannel, useUsername } from "entities/player/model"
+import { useChannel, useUsername } from "entities/player"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { rpsApi } from "shared/api"

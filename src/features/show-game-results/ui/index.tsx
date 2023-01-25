@@ -1,13 +1,12 @@
-import { GameResults } from "entities/game-results"
-import { setIsShown, setWinner, useIsShown, useWinner } from "entities/game-results/model/results"
-import { useChannel } from "entities/player/model"
+import { GameResults, setIsShown, setWinner, useIsShown, useWinner } from "entities/game-results"
+import { useChannel } from "entities/player"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Result, rpsApi } from "shared/api"
 import { compareChoices } from "../lib"
 
 
-const ShowGameResults: React.FC = () => {
+export const ShowGameResults: React.FC = () => {
 
    const socket = useChannel()
 
@@ -58,5 +57,3 @@ const ShowGameResults: React.FC = () => {
 
    )
 }
-
-export default ShowGameResults

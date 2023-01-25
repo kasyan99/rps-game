@@ -1,1 +1,1 @@
-export * as resultsModel from "./results"
+export * from "./results"

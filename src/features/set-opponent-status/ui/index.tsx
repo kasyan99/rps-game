@@ -1,5 +1,5 @@
-import Status from "entities/opponent/ui/status"
-import { useChannel, useUsername } from "entities/player/model"
+import { Status } from "entities/opponent"
+import { useChannel, useUsername } from "entities/player"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { rpsApi } from "shared/api"

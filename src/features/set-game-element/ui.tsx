@@ -1,7 +1,7 @@
 import { resetElementsValue, setChosenElenment, setDisabled, useDisabled, useGameElements } from "entities/game-element";
 import { Item } from "entities/game-element"
-import { setIsShown } from "entities/game-results/model/results";
-import { useChannel } from "entities/player/model";
+import { setIsShown } from "entities/game-results";
+import { useChannel } from "entities/player";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { GameElement, rpsApi } from "shared/api";

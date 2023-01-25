@@ -1,10 +1,9 @@
-import { useWinner } from "entities/game-results/model/results"
+import { useWinner } from "entities/game-results"
 import { useOpponentName } from "entities/opponent"
-import { useChannel, useUsername } from "entities/player/model"
-import { Score } from "entities/score"
+import { useChannel, useUsername } from "entities/player"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { increaseOpponentScore, increaseUserScore, resetScore, useOpponentScore, useUserScore } from "entities/score/model"
+import { Score, increaseOpponentScore, increaseUserScore, resetScore, useOpponentScore, useUserScore } from "entities/score"
 import { rpsApi } from "shared/api"
 
 export const SetScore: React.FC = () => {

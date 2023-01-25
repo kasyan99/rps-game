@@ -1,4 +1,4 @@
-import { setChannel, useChannel, useUsername } from "entities/player/model"
+import { setChannel, useChannel, useUsername, } from "entities/player"
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"

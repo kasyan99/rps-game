@@ -1,9 +1,8 @@
-
 import { Player } from "entities/player"
-import { useChannel, useUsername } from "entities/player/model"
+import { useChannel, useUsername } from "entities/player"
 import { SetGameElement } from "features/set-game-element"
 import { SetScore } from "features/set-score"
-import ShowGameResults from "features/show-game-results/ui"
+import { ShowGameResults } from "features/show-game-results"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Opponent } from "widgets/opponent"
