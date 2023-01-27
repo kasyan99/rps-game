@@ -1,51 +1,17 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit"
-import { useSelector } from "react-redux"
+import { createEvent, createStore } from "effector"
+import { useStore } from "effector-react"
 
-type InitialState = {
-  opponentScore: number
-  userScore: number
-}
+export const increaseUserScore = createEvent()
+export const increaseOpponentScore = createEvent()
+export const resetScore = createEvent()
 
-const initialState: InitialState = {
-  opponentScore: 0,
-  userScore: 0,
-}
+const $userScore = createStore(0)
+  .on(increaseUserScore, (score) => score + 1)
+  .on(resetScore, () => 0)
 
-export const scoreModel = createSlice({
-  name: "score",
-  initialState,
-  reducers: {
-    increaseUserScore: (state) => {
-      state.userScore += 1
-    },
-    increaseOpponentScore: (state) => {
-      state.opponentScore += 1
-    },
-    resetScore: (state) => {
-      state.userScore = 0
-      state.opponentScore = 0
-    },
-  },
-})
+const $opponentScore = createStore(0)
+  .on(increaseOpponentScore, (score) => score + 1)
+  .on(resetScore, () => 0)
 
-export const { increaseOpponentScore, increaseUserScore, resetScore } =
-  scoreModel.actions
-
-// selectors
-export const useOpponentScore = () =>
-  useSelector(
-    createSelector(
-      (state: RootState) => state.score,
-      (score) => score.opponentScore
-    )
-  )
-
-export const useUserScore = () =>
-  useSelector(
-    createSelector(
-      (state: RootState) => state.score,
-      (score) => score.userScore
-    )
-  )
-
-export const reducer = scoreModel.reducer
+export const useUserScore = () => useStore($userScore)
+export const useOpponentScore = () => useStore($opponentScore)

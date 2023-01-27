@@ -1,5 +1,4 @@
-import { Player } from "entities/player"
-import { useChannel, useUsername } from "entities/player"
+import { Player, useChannel, usePlayer } from "entities/player"
 import { SetGameElement } from "features/set-game-element"
 import { SetScore } from "features/set-score"
 import { ShowGameResults } from "features/show-game-results"
@@ -10,7 +9,7 @@ import { Opponent } from "widgets/opponent"
 const GameWithPlayer: React.FC = () => {
    //get from store
    const socket = useChannel()
-   const username = useUsername()
+   const username = usePlayer()
 
    const navigate = useNavigate()
 

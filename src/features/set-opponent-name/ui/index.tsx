@@ -1,16 +1,17 @@
-import { OpponentName, setOpponentName, useOpponentName } from "entities/opponent"
-import { useChannel, useUsername } from "entities/player"
+import { useEvent } from "effector-react"
+import { OpponentName, setOpponentName, useOpponent } from "entities/opponent"
+import { useChannel, usePlayer } from "entities/player"
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import { rpsApi } from "shared/api"
 
 export const SetOpponentName: React.FC = () => {
    //get from store
    const socket = useChannel()
-   const username = useUsername()
-   const opponentName = useOpponentName()
+   const username = usePlayer()
 
-   const dispatch = useDispatch()
+   const { name: opponentName } = useOpponent
+
+   const onOpponentNameChanged = useEvent(setOpponentName)
 
    useEffect(() => {
 
@@ -20,13 +21,13 @@ export const SetOpponentName: React.FC = () => {
             if (players.length > 1) {
                //find opponent name
                const opponent = players.find(player => player !== username)
-               dispatch(setOpponentName(opponent))
+               onOpponentNameChanged(opponent)
             }
          })
 
          rpsApi.player.getPlayers(socket)
       }
-   }, [dispatch, socket, username])
+   }, [onOpponentNameChanged, socket, username])
 
    return <OpponentName opponentName={opponentName} />
 }

@@ -1,17 +1,17 @@
-import { setChannel, useChannel, useUsername, } from "entities/player"
+import { setChannel, useChannel, usePlayer } from "entities/player"
 import React, { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { rpsApi } from "shared/api"
 import { SetPlayerName } from "features/set-player-name"
+import { useEvent } from "effector-react"
 
 const Auth: React.FC = () => {
-   const dispatch = useDispatch()
-
    const navigate = useNavigate()
 
    const openedSocket = useChannel()
-   const storagedPlayer = useUsername()
+   const storagedPlayer = usePlayer()
+
+   const onChannelChanged = useEvent(setChannel)
 
    useEffect(() => {
 
@@ -21,12 +21,12 @@ const Auth: React.FC = () => {
          const socket = rpsApi.player.openChannel(storagedPlayer)
 
          //store opened channel
-         dispatch(setChannel(socket))
+         onChannelChanged(socket)
 
          navigate('/game-with-player')
       }
 
-   }, [dispatch, navigate, openedSocket, storagedPlayer])
+   }, [navigate, onChannelChanged, openedSocket, storagedPlayer])
 
    return (
       <div>

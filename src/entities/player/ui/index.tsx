@@ -1,10 +1,11 @@
-import { useUsername } from "../model"
+import { usePlayer } from "../model"
 
 export const Player: React.FC = () => {
    //get from store
-   const name = useUsername()
+   const username = usePlayer()
+
    return (
-      <div>Player: {name}</div>
+      <div>Player: {username}</div>
    )
 }
 

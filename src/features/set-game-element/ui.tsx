@@ -1,37 +1,38 @@
-import { resetElementsValue, setChosenElenment, setDisabled, useDisabled, useGameElements } from "entities/game-element";
+import { useEvent } from "effector-react";
+import { resetElementsValue, setChosenElenment, setDisabled, useGameElements } from "entities/game-element";
 import { Item } from "entities/game-element"
 import { setIsShown } from "entities/game-results";
-import { useChannel } from "entities/player";
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { GameElement, rpsApi } from "shared/api";
+import { useChannel } from "entities/player";
 
 export const SetGameElement: React.FC = () => {
 
    const socket = useChannel()
 
-   const dispatch = useDispatch()
-
    const gameElements = useGameElements()
 
-   const disabled = useDisabled()
+   const onIsShownChanged = useEvent(setIsShown)
+   const onDisabledChanged = useEvent(setDisabled)
+   const onElementChanged = useEvent(setChosenElenment)
+   const onResetElementsValue = useEvent(resetElementsValue)
 
    useEffect(() => {
       if (socket) {
          rpsApi.game.subscribeGameFinished(socket, () => {
             //reset elements(inputs) values
-            dispatch(resetElementsValue())
+            onResetElementsValue()
          })
 
          rpsApi.player.subscribePlayersReceived(socket, (players: string[]) => {
             if (players.length < 2) {
-               dispatch(setDisabled(true))
+               onDisabledChanged(true)
             } else {
-               dispatch(setDisabled(false))
+               onDisabledChanged(false)
             }
          })
       }
-   }, [dispatch, socket])
+   }, [onDisabledChanged, onResetElementsValue, socket])
 
    if (!socket) return <div>Loading...</div>
 
@@ -40,22 +41,19 @@ export const SetGameElement: React.FC = () => {
       const value = e.target.value as GameElement
 
       //choose the element
-      dispatch(setChosenElenment(value))
+      onElementChanged(value)
       //send the choice
       rpsApi.player.makeChoice(socket, value)
       //hide the results
-      dispatch(setIsShown(false))
+      onIsShownChanged(false)
    }
 
    return (
       <form>
          {gameElements.map(element => <Item
             onChange={onChange}
-            value={element.value}
             key={element.value}
-            disabled={disabled}
-            checked={element.checked}
-            img={element.img}
+            element={element}
          />)}
       </form>
    )

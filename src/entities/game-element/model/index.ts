@@ -1,68 +1,35 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { useSelector } from "react-redux"
-import { GameElement } from "shared/api"
 import { initialGameElements } from "../config"
+import { createEvent, createStore } from "effector"
+import { GameElement } from "shared/api"
 import { IGameElement } from "../types"
+import { useStore } from "effector-react"
 
-type InitialState = {
-  gameElements: IGameElement[]
-  disabled: boolean
-}
+export const setChosenElenment = createEvent<GameElement>()
+export const resetElementsValue = createEvent()
+export const setDisabled = createEvent<boolean>()
 
-const initialState: InitialState = {
-  gameElements: initialGameElements,
-  disabled: true,
-}
-
-export const gameElementModel = createSlice({
-  name: "game-element",
-  initialState,
-  reducers: {
-    setChosenElenment: (
-      state,
-      { payload: value }: PayloadAction<GameElement>
-    ) => {
-      state.gameElements = state.gameElements.map((elem) => {
-        //to choose element
-        if (elem.value === value) {
-          const newElem = { ...elem }
-          newElem.checked = true
-          return newElem
-        }
-        return elem
-      })
-    },
-    resetElementsValue: (state) => {
-      state.gameElements = state.gameElements.map((elem) => {
+const $gameElements = createStore<IGameElement[]>(initialGameElements)
+  .on(setChosenElenment, (gameElements, value) =>
+    gameElements.map((elem) => {
+      //to choose element
+      if (elem.value === value) {
         const newElem = { ...elem }
-        newElem.checked = false
+        newElem.checked = true
         return newElem
-      })
-    },
-    setDisabled: (state, { payload: disabled }: PayloadAction<boolean>) => {
-      state.disabled = disabled
-    },
-  },
-})
-
-export const { resetElementsValue, setChosenElenment, setDisabled } =
-  gameElementModel.actions
-
-// selectors
-export const useGameElements = () =>
-  useSelector(
-    createSelector(
-      (state: RootState) => state.gameElement,
-      (gameElement) => gameElement.gameElements
-    )
+      }
+      return elem
+    })
+  )
+  .on(resetElementsValue, (gameElements) =>
+    gameElements.map((elem) => {
+      const newElem = { ...elem }
+      newElem.checked = false
+      return newElem
+    })
+  )
+  .on(setDisabled, (gameElements, disabled) =>
+    gameElements.map((elem) => ({ ...elem, disabled }))
   )
 
-export const useDisabled = () =>
-  useSelector(
-    createSelector(
-      (state: RootState) => state.gameElement,
-      (gameElement) => gameElement.disabled
-    )
-  )
-
-export const reducer = gameElementModel.reducer
+//selector
+export const useGameElements = () => useStore($gameElements)

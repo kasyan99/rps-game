@@ -1,36 +1,22 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { useSelector } from "react-redux"
+import { createEvent, createStore } from "effector"
+import { useStore } from "effector-react"
 
-type InitialState = {
+type OpponentInitialState = {
   name: string | undefined
 }
 
-const initialState: InitialState = {
-  name: "",
+const opponentInitialState: OpponentInitialState = {
+  name: undefined,
 }
 
-export const opponentModel = createSlice({
-  name: "opponent",
-  initialState,
-  reducers: {
-    setOpponentName: (
-      state,
-      { payload: name }: PayloadAction<string | undefined>
-    ) => {
-      state.name = name
-    },
-  },
-})
+export const setOpponentName = createEvent<string | undefined>()
 
-export const { setOpponentName } = opponentModel.actions
+const $opponent = createStore(opponentInitialState).on(
+  setOpponentName,
+  (state, name) => ({
+    ...state,
+    name,
+  })
+)
 
-// selectors
-export const useOpponentName = () =>
-  useSelector(
-    createSelector(
-      (state: RootState) => state.opponent,
-      (opponent) => opponent.name
-    )
-  )
-
-export const reducer = opponentModel.reducer
+export const useOpponent = () => useStore($opponent)

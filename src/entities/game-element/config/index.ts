@@ -8,15 +8,18 @@ export const initialGameElements: IGameElement[] = [
     value: "paper",
     checked: false,
     img: paper,
+    disabled: false,
   },
   {
     value: "rock",
     checked: false,
     img: rock,
+    disabled: false,
   },
   {
     value: "scissors",
     checked: false,
     img: scissors,
+    disabled: false,
   },
 ]

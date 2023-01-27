@@ -1,25 +1,25 @@
-import { useWinner } from "entities/game-results"
-import { useOpponentName } from "entities/opponent"
-import { useChannel, useUsername } from "entities/player"
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { Score, increaseOpponentScore, increaseUserScore, resetScore, useOpponentScore, useUserScore } from "entities/score"
+import { Score, increaseUserScore, increaseOpponentScore, resetScore, useOpponentScore, useUserScore } from "entities/score"
 import { rpsApi } from "shared/api"
+import { useEvent } from "effector-react"
+import { useWinner } from "entities/game-results"
+import { useOpponent } from "entities/opponent"
+import { useChannel, usePlayer } from "entities/player"
 
 export const SetScore: React.FC = () => {
 
    //get from store
-   const username = useUsername()
-   const opponentName = useOpponentName()
-
-   const userScore = useUserScore()
-   const opponetScore = useOpponentScore()
-
-   const winner = useWinner()
-
-   const dispatch = useDispatch()
-
    const socket = useChannel()
+   const username = usePlayer()
+
+   const { name: opponentName } = useOpponent()
+   const winner = useWinner()
+   const opponentScore = useOpponentScore()
+   const userScore = useUserScore()
+
+   const handleIncreaseUserScore = useEvent(increaseUserScore)
+   const handleIncreaseOpponentScore = useEvent(increaseOpponentScore)
+   const handleResetScore = useEvent(resetScore)
 
    useEffect(() => {
       //no winner or draw -> do nothing
@@ -28,27 +28,27 @@ export const SetScore: React.FC = () => {
       }
       //user is winner -> increase user score +1
       else if (winner.username === username) {
-         dispatch(increaseUserScore())
+         handleIncreaseUserScore()
       }
       //opponent is winner -> increase opponent score +1
       else if (winner.username === opponentName) {
-         dispatch(increaseOpponentScore())
+         handleIncreaseOpponentScore()
       }
-   }, [dispatch, opponentName, username, winner])
+   }, [handleIncreaseOpponentScore, handleIncreaseUserScore, opponentName, username, winner])
 
    useEffect(() => {
       if (socket) {
          rpsApi.player.subscribePlayersDisconnected(socket, () => {
             //reset score
-            dispatch(resetScore())
+            handleResetScore()
          })
       }
-   }, [dispatch, socket])
+   }, [handleResetScore, socket])
 
    if (!opponentName || !username) return null
 
    return (
-      <Score opponentName={opponentName} username={username} userScore={userScore} opponetScore={opponetScore} />
+      <Score opponentName={opponentName} username={username} userScore={userScore} opponetScore={opponentScore} />
    )
 }
 

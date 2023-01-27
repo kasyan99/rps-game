@@ -4,4 +4,5 @@ export interface IGameElement {
   value: GameElement
   checked: boolean
   img: string
+  disabled: boolean
 }
