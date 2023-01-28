@@ -9,7 +9,7 @@ export const SetOpponentName: React.FC = () => {
    const socket = useChannel()
    const username = usePlayer()
 
-   const { name: opponentName } = useOpponent
+   const { name: opponentName } = useOpponent()
 
    const onOpponentNameChanged = useEvent(setOpponentName)
 

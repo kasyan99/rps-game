@@ -1,7 +1,8 @@
-import { GameResults, setIsShown, setWinner, useIsShown, useWinner } from "entities/game-results"
-import { useEffect, useState } from "react"
-import { Result, rpsApi } from "shared/api"
-import { compareChoices } from "../lib"
+import {
+   GameResults, setIsShown, setResults, setWinner, useIsShown, useResults, useWinner
+} from "entities/game-results"
+import { useEffect } from "react"
+import { rpsApi } from "shared/api"
 import { useEvent } from "effector-react"
 import { useChannel } from "entities/player"
 
@@ -9,25 +10,19 @@ export const ShowGameResults: React.FC = () => {
 
    const socket = useChannel()
 
-   const [results, setResults] = useState<Result[] | null>(null)
-
    //get from store
    const isShown = useIsShown()
    const winner = useWinner()
+   const results = useResults()
 
    const onWinnerChanged = useEvent(setWinner)
    const onIsShownChanged = useEvent(setIsShown)
+   const onResultsChanged = useEvent(setResults)
 
    useEffect(() => {
       if (socket) {
          rpsApi.game.subscribeGameFinished(socket, (response) => {
-            //calculate winner
-            const win = compareChoices(response.results)
-
-            setResults(response.results)
-
-            onWinnerChanged(win)
-
+            onResultsChanged(response.results)
             //show results
             onIsShownChanged(true)
          })
@@ -37,7 +32,7 @@ export const ShowGameResults: React.FC = () => {
             onIsShownChanged(false)
          })
       }
-   }, [onIsShownChanged, onWinnerChanged, results, socket])
+   }, [onIsShownChanged, onResultsChanged, onWinnerChanged, results, socket])
 
    if (!winner || !results) return null
 

@@ -1,6 +1,7 @@
 import { createEvent, createStore } from "effector"
 import { useStore } from "effector-react"
 import { Result } from "shared/api"
+import { compareChoices } from "../lib"
 import { Winner } from "../types"
 
 export const setResults = createEvent<Result[]>()
@@ -12,8 +13,7 @@ const $results = createStore<Result[] | null>(null).on(
   (_, results) => results
 )
 
-const $winner = createStore<Winner>(null).on(setWinner, (_, winner) => winner)
-
+const $winner = $results.map((res) => compareChoices(res))
 const $isShown = createStore(false).on(setIsShown, (_, isShown) => isShown)
 
 export const useResults = () => useStore($results)

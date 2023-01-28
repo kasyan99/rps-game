@@ -1,9 +1,10 @@
 import { Result } from "shared/api"
 import { Winner } from "entities/game-results"
 
-export function compareChoices(results: Result[]) {
+export function compareChoices(results: Result[] | null) {
   let winner: Winner = null
 
+  if (!results) return null
   if (results.length === 0) return null
 
   const [player1, player2] = results
