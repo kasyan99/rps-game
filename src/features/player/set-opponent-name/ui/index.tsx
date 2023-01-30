@@ -1,6 +1,5 @@
 import { useEvent } from "effector-react"
-import { OpponentName, setOpponentName, useOpponent } from "entities/opponent"
-import { useChannel, usePlayer } from "entities/player"
+import { OpponentName, setOpponentName, useOpponent, useChannel, usePlayer } from "entities/player"
 import { useEffect } from "react"
 import { rpsApi } from "shared/api"
 

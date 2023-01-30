@@ -1,6 +1,6 @@
 import {
-   GameResults, setIsShown, setResults, useIsShown, useResults, useWinner
-} from "entities/game-results"
+   GameResults, setIsShown, setResults, useIsShown, useWinner
+} from "entities/game"
 import { useEffect } from "react"
 import { rpsApi } from "shared/api"
 import { useEvent } from "effector-react"
@@ -13,7 +13,6 @@ export const ShowGameResults: React.FC = () => {
    //get from store
    const isShown = useIsShown()
    const winner = useWinner()
-   // const results = useResults()
 
    const onIsShownChanged = useEvent(setIsShown)
    const onResultsChanged = useEvent(setResults)

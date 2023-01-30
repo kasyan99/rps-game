@@ -2,7 +2,7 @@ import { setChannel, useChannel, usePlayer } from "entities/player"
 import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { rpsApi } from "shared/api"
-import { SetPlayerName } from "features/set-player-name"
+import { SetPlayerName } from "features/player"
 import { useEvent } from "effector-react"
 
 const Auth: React.FC = () => {

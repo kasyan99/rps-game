@@ -1,5 +1,4 @@
-import { Status } from "entities/opponent"
-import { useChannel } from "entities/player"
+import { Status, useChannel } from "entities/player"
 import { useEffect, useState } from "react"
 import { rpsApi } from "shared/api"
 

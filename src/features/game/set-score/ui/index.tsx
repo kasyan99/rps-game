@@ -1,10 +1,16 @@
 import { useEffect } from "react"
-import { Score, increaseUserScore, increaseOpponentScore, resetScore, useOpponentScore, useUserScore } from "entities/score"
+import {
+   Score,
+   increaseUserScore,
+   increaseOpponentScore,
+   resetScore,
+   useOpponentScore,
+   useUserScore,
+   useWinner
+} from "entities/game"
 import { rpsApi } from "shared/api"
 import { useEvent } from "effector-react"
-import { useWinner } from "entities/game-results"
-import { useOpponent } from "entities/opponent"
-import { useChannel, usePlayer } from "entities/player"
+import { useChannel, usePlayer, useOpponent } from "entities/player"
 
 export const SetScore: React.FC = () => {
 
@@ -42,14 +48,6 @@ export const SetScore: React.FC = () => {
       //reset score
       handleResetScore()
    }, [handleResetScore, disconnetcedPlayer])
-   // useEffect(() => {
-   //    if (socket) {
-   //       rpsApi.player.subscribePlayersDisconnected(socket, () => {
-   //          //reset score
-   //          handleResetScore()
-   //       })
-   //    }
-   // }, [handleResetScore, socket])
 
    if (!opponentName || !username) return null
 

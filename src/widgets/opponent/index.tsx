@@ -1,7 +1,5 @@
-import { useOpponent } from "entities/opponent"
-import { SetOpponentName } from "features/set-opponent-name/ui"
-import { SetOpponentStatus } from "features/set-opponent-status/ui"
-
+import { useOpponent } from "entities/player"
+import { SetOpponentName, SetOpponentStatus } from "features/player"
 
 export const Opponent: React.FC = () => {
    //get from store

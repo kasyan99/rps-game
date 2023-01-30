@@ -1,7 +1,5 @@
 import { Player, useChannel, usePlayer } from "entities/player"
-import { SetGameElement } from "features/set-game-element"
-import { SetScore } from "features/set-score"
-import { ShowGameResults } from "features/show-game-results"
+import { SetGameElement, SetScore, ShowGameResults } from "features/game"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Opponent } from "widgets/opponent"

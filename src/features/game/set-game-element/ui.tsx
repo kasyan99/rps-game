@@ -1,7 +1,7 @@
 import { useEvent } from "effector-react";
-import { resetElementsValue, setChosenElenment, setDisabled, useGameElements } from "entities/game-element";
-import { Item } from "entities/game-element"
-import { setIsShown } from "entities/game-results";
+import { resetElementsValue, setChosenElenment, setDisabled, useGameElements } from "entities/game";
+import { Item } from "entities/game"
+import { setIsShown } from "entities/game";
 import React, { useEffect } from "react";
 import { GameElement, rpsApi } from "shared/api";
 import { useChannel } from "entities/player";
