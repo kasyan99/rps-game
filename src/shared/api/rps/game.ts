@@ -4,10 +4,12 @@ import { IUser, Result } from "./models"
 
 export const useGameFinished = (socket: Socket | null) => {
   const [results, setResults] = useState<Result[]>()
-  if (socket) {
-    socket.on("game_finished", (response: { results: Result[] }) => {
+  try {
+    socket?.on("game_finished", (response: { results: Result[] }) => {
       setResults(response.results)
     })
+  } catch (error) {
+    throw error
   }
 
   return results
@@ -15,10 +17,12 @@ export const useGameFinished = (socket: Socket | null) => {
 
 export const useOpponentChoice = (socket: Socket | null) => {
   const [choice, setChoice] = useState<{ player: IUser }>()
-  if (socket) {
-    socket.on("opponent_made_choice", (player: IUser) => {
+  try {
+    socket?.on("opponent_made_choice", (player: IUser) => {
       setChoice({ player })
     })
+  } catch (error) {
+    throw error
   }
 
   return choice
