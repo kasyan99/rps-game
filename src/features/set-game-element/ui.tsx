@@ -17,22 +17,21 @@ export const SetGameElement: React.FC = () => {
    const onElementChanged = useEvent(setChosenElenment)
    const onResetElementsValue = useEvent(resetElementsValue)
 
-   useEffect(() => {
-      if (socket) {
-         rpsApi.game.subscribeGameFinished(socket, () => {
-            //reset elements(inputs) values
-            onResetElementsValue()
-         })
+   const results = rpsApi.game.useGameFinished(socket)
 
-         rpsApi.player.subscribePlayersReceived(socket, (players: string[]) => {
-            if (players.length < 2) {
-               onDisabledChanged(true)
-            } else {
-               onDisabledChanged(false)
-            }
-         })
+   useEffect(() => {
+      onResetElementsValue()
+   }, [onResetElementsValue, results])
+
+   const players = rpsApi.player.usePlayersReceived(socket)
+
+   useEffect(() => {
+      if (players && players.length < 2) {
+         onDisabledChanged(true)
+      } else {
+         onDisabledChanged(false)
       }
-   }, [onDisabledChanged, onResetElementsValue, socket])
+   }, [onDisabledChanged, players])
 
    if (!socket) return <div>Loading...</div>
 

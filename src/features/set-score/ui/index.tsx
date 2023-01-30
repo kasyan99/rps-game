@@ -36,14 +36,20 @@ export const SetScore: React.FC = () => {
       }
    }, [handleIncreaseOpponentScore, handleIncreaseUserScore, opponentName, username, winner])
 
+   const disconnetcedPlayer = rpsApi.player.usePlayersDisconnected(socket)
+
    useEffect(() => {
-      if (socket) {
-         rpsApi.player.subscribePlayersDisconnected(socket, () => {
-            //reset score
-            handleResetScore()
-         })
-      }
-   }, [handleResetScore, socket])
+      //reset score
+      handleResetScore()
+   }, [handleResetScore, disconnetcedPlayer])
+   // useEffect(() => {
+   //    if (socket) {
+   //       rpsApi.player.subscribePlayersDisconnected(socket, () => {
+   //          //reset score
+   //          handleResetScore()
+   //       })
+   //    }
+   // }, [handleResetScore, socket])
 
    if (!opponentName || !username) return null
 

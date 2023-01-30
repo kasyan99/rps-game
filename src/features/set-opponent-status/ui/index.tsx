@@ -1,5 +1,5 @@
 import { Status } from "entities/opponent"
-import { useChannel, usePlayer } from "entities/player"
+import { useChannel } from "entities/player"
 import { useEffect, useState } from "react"
 import { rpsApi } from "shared/api"
 
@@ -11,44 +11,49 @@ export const SetOpponentStatus: React.FC = () => {
 
    //get from store
    const socket = useChannel()
-   const username = usePlayer()
+
+   const results = rpsApi.game.useGameFinished(socket)
 
    useEffect(() => {
+      setIsMadeChoice(false)
+   }, [results])
 
-      if (socket) {
+   const choice = rpsApi.game.useOpponentChoice(socket)
 
-         rpsApi.player.subscribePlayersReceived(socket, (players: string[]) => {
-            if (players.length > 1) {
-               //set status online/offline
-               setIsOnline(true)
-            }
-         })
-
-         rpsApi.player.getPlayers(socket)
-
-         rpsApi.player.subscribePlayersConnected(socket, ({ username }) => {
-            //set status online/offline
-            setIsOnline(true)
-         })
-
-         rpsApi.player.subscribePlayersDisconnected(socket, ({ username }) => {
-            //to check value of players
-            rpsApi.player.getPlayers(socket)
-            //set status online/offline
-            setIsOnline(false)
-         })
-
-         rpsApi.game.subscribeOponentChoice(socket, ({ username }) => {
-            //set status 'made a choice'
-            setIsMadeChoice(true)
-         })
-
-         rpsApi.game.subscribeGameFinished(socket, () => {
-            //reset status 'made a choice'
-            setIsMadeChoice(false)
-         })
+   useEffect(() => {
+      //set status 'made a choice'
+      if (choice?.player) {
+         setIsMadeChoice(true)
       }
-   }, [socket, username])
+   }, [choice])
+
+   const players = rpsApi.player.usePlayersReceived(socket)
+
+   useEffect(() => {
+      if (players && players.length > 1) {
+         //set status online/offline
+         setIsOnline(true)
+      }
+   }, [players])
+
+   //get players
+   useEffect(() => {
+      rpsApi.player.getPlayers(socket)
+   }, [socket])
+
+   const connetcedPlayer = rpsApi.player.usePlayersConnected(socket)
+
+   useEffect(() => {
+      //set status online/offline
+      setIsOnline(true)
+   }, [connetcedPlayer])
+
+   const disconnetcedPlayer = rpsApi.player.usePlayersDisconnected(socket)
+
+   useEffect(() => {
+      //set status online/offline
+      setIsOnline(false)
+   }, [disconnetcedPlayer])
 
    return <Status isMadeChoice={isMadeChoice} isOnline={isOnline} />
 

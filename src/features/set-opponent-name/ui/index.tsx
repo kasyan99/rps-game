@@ -13,21 +13,21 @@ export const SetOpponentName: React.FC = () => {
 
    const onOpponentNameChanged = useEvent(setOpponentName)
 
+   const players = rpsApi.player.usePlayersReceived(socket)
+
    useEffect(() => {
-
-      if (socket) {
-
-         rpsApi.player.subscribePlayersReceived(socket, (players: string[]) => {
-            if (players.length > 1) {
-               //find opponent name
-               const opponent = players.find(player => player !== username)
-               onOpponentNameChanged(opponent)
-            }
-         })
-
-         rpsApi.player.getPlayers(socket)
+      if (players && players.length > 1) {
+         //find opponent name
+         const opponent = players.find(player => player !== username)
+         onOpponentNameChanged(opponent)
       }
-   }, [onOpponentNameChanged, socket, username])
+
+      // rpsApi.player.getPlayers(socket)
+   }, [onOpponentNameChanged, players, socket, username])
+
+   useEffect(() => {
+      rpsApi.player.getPlayers(socket)
+   }, [socket])
 
    return <OpponentName opponentName={opponentName} />
 }
